@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #333;
+      margin: 0;
+    }
+
+    .calculator {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .display {
+      background-color: #000;
+      color: #fff;
+      font-size: 2em;
+      text-align: right;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.5em;
+      padding: 20px;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    #equals {
+      background-color: #f90;
+      color: #000;
+    }
+
+    #equals:hover {
+      background-color: #e80;
+    }
+
+    #display {
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <div id="display">0</div>
+    </div>
+    <div class="buttons">
+      <button class="btn btn-secondary" id="ac">AC</button>
+      <button class="btn btn-secondary" id="del">DEL</button>
+      <button class="btn btn-secondary" id="percent">%</button>
+      <button class="btn btn-secondary" id="divide">/</button>
+      <button class="btn btn-secondary number">7</button>
+      <button class="btn btn-secondary number">8</button>
+      <button class="btn btn-secondary number">9</button>
+      <button class="btn btn-secondary" id="multiply">*</button>
+      <button class="btn btn-secondary number">4</button>
+      <button class="btn btn-secondary number">5</button>
+      <button class="btn btn-secondary number">6</button>
+      <button class="btn btn-secondary" id="subtract">-</button>
+      <button class="btn btn-secondary number">1</button>
+      <button class="btn btn-secondary number">2</button>
+      <button class="btn btn-secondary number">3</button>
+      <button class="btn btn-secondary" id="add">+</button>
+      <button class="btn btn-secondary number">00</button>
+      <button class="btn btn-secondary number">0</button>
+      <button class="btn btn-secondary" id="decimal">.</button>
+      <button class="btn btn-primary" id="equals">=</button>
+    </div>
+  </div>
+  <script>
+    const display = document.getElementById('display');
+    const buttons = Array.from(document.querySelectorAll('button'));
+    let displayValue = '0';
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        switch (button.id) {
+          case 'ac':
+            displayValue = '0';
+            break;
+          case 'del':
+            displayValue = displayValue.slice(0, -1) || '0';
+            break;
+          case 'percent':
+            displayValue = (parseFloat(displayValue) / 100).toString();
+            break;
+          case 'divide':
+            displayValue += '/';
+            break;
+          case 'multiply':
+            displayValue += '*';
+            break;
+          case 'subtract':
+            displayValue += '-';
+            break;
+          case 'add':
+            displayValue += '+';
+            break;
+          case 'decimal':
+            if (!displayValue.includes('.')) {
+              displayValue += '.';
+            }
+            break;
+          case 'equals':
+            try {
+              displayValue = eval(displayValue).toString();
+            } catch {
+              displayValue = 'Error';
+            }
+            break;
+          default:
+            if (displayValue === '0') {
+              displayValue = button.innerText;
+            } else {
+              displayValue += button.innerText;
+            }
+        }
+        display.innerText = displayValue;
+      });
+    });
+  </script>
+</body>
+</html>
